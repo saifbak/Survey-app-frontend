@@ -7,12 +7,11 @@ import axios from "axios";
 
 function App() {
     const userDetails = useSelector(selectUserSlice);
-    const [selectedAnswers, setSelectedAnswers] = useState({});
+    const [selectedAnswers, setSelectedAnswers] = useState<any>({});
     const {userLogin} = useUserActions()
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState<number>(1);
     const [formData, setFormData] = useState({name: "", dob: ""});
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     const questions = [
         {
@@ -34,7 +33,7 @@ function App() {
     };
 
     const handleAnswerChange = (questionId: string, answer: string) => {
-        setSelectedAnswers((prev) => ({...prev, [questionId]: answer}));
+        setSelectedAnswers((prev: any) => ({...prev, [questionId]: answer}));
     };
 
     const handleSubmit = () => {
@@ -49,7 +48,6 @@ function App() {
 
     const submitQuiz = async () => {
         setLoading(true);
-        setError("");
         try {
             const payload = {
                 userId: userDetails.user?._id,
@@ -63,7 +61,7 @@ function App() {
             console.log("Quiz submitted successfully:", response.data);
             setStep(3);
         } catch (err) {
-            setError("Failed to submit your quiz. Please try again.");
+            console.log(err)
         } finally {
             setLoading(false);
         }
